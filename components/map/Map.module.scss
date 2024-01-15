@@ -1,0 +1,20 @@
+.resize {
+  height: 10px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  display: none;
+  cursor: row-resize;
+
+  &.resizeable {
+    display: block;
+  }
+}
+
+.map_container {
+  height: 100%;
+  width: 100%;
+}

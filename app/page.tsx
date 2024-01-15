@@ -1,95 +1,63 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import { CastleMarker } from "@/types/map";
+import About from "./_components/sections/about/About";
+import Genre from "./_components/sections/genre/Genre";
+import Preflinks from "./_components/sections/preflinks/Preflinks";
+import Ranking from "./_components/sections/ranking/Ranking";
+import styles from "./page.module.scss";
+import Map from "@/components/map/Map";
 
-export default function Home() {
+const sample_data: CastleMarker[] = [
+  {
+    id: 1,
+    name: "名古屋城",
+    coordinates: {
+      lat: 35.1855,
+      lng: 136.89939,
+    },
+    color: "red",
+  },
+  {
+    id: 2,
+    name: "大阪城",
+    coordinates: {
+      lat: 34.687315,
+      lng: 135.526201,
+    },
+  },
+  {
+    id: 3,
+    name: "姫路城",
+    coordinates: {
+      lat: 34.839722,
+      lng: 134.693889,
+    },
+  },
+  {
+    id: 4,
+    name: "松本城",
+    coordinates: {
+      lat: 36.238056,
+      lng: 137.968056,
+    },
+  },
+  {
+    id: 5,
+    name: "熊本城",
+    coordinates: {
+      lat: 32.808056,
+      lng: 130.7075,
+    },
+  },
+];
+
+export default function Page() {
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <About />
+      <Preflinks />
+      <Ranking />
+      <Genre />
+      <Map className={styles.map} markers={sample_data} />
     </main>
-  )
+  );
 }
