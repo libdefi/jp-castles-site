@@ -1,10 +1,7 @@
 import { CastleMarker } from "@/types/map";
 import About from "./_components/sections/about/About";
-import Genre from "./_components/sections/genre/Genre";
-import Preflinks from "./_components/sections/preflinks/Preflinks";
-import Ranking from "./_components/sections/ranking/Ranking";
 import styles from "./page.module.scss";
-import Map from "@/components/map/Map";
+import CastleMap from "@/components/map/Map";
 
 const sample_data: CastleMarker[] = [
   {
@@ -54,10 +51,7 @@ export default function Page() {
   return (
     <main className={styles.main}>
       <About />
-      <Preflinks />
-      <Ranking />
-      <Genre />
-      <Map className={styles.map} markers={sample_data} />
+      <CastleMap className={styles.map} markers={sample_data} />
     </main>
   );
 }
