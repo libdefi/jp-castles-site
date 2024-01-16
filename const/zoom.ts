@@ -6,12 +6,12 @@ type ZoomLevelMap = {
  * zoomレベルと表示するスケールの対応表
  */
 export const ZOOM_LEVEL_MAP: ZoomLevelMap = {
-  7: 1,
-  8: 1,
-  9: 1,
-  10: 1,
-  11: 1,
-  12: 1,
+  7: 5,
+  8: 4,
+  9: 3,
+  10: 3,
+  11: 2,
+  12: 2,
   13: 1,
   14: 1,
   15: 1,
