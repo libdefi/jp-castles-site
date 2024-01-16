@@ -10,40 +10,34 @@ import { CastleMarker } from "@/types/map";
 import { useEffect, useState } from "react";
 import { DEFAULT_ZOOM, ZOOM_MAX, ZOOM_MIN } from "@/const/zoom";
 
-type Props = {
-  select?: string;
-} & React.HTMLProps<HTMLDivElement>;
-
-export default function CastleMap(props: Props) {
+export default function CastleMap() {
   const initCenter = new LatLng(35.1855, 136.89939);
   const [markers, setMarkers] = useState<CastleMarker[]>([]);
 
   return (
-    <div {...props}>
-      <MapContainer
-        center={initCenter}
-        zoom={DEFAULT_ZOOM}
-        minZoom={ZOOM_MIN}
-        maxZoom={ZOOM_MAX}
-        scrollWheelZoom
-        doubleClickZoom
-        zoomControl={false}
-        className={styles.map_container}
-      >
-        <InnerMapContainer initCenter={initCenter} setMarkers={setMarkers} />
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    <MapContainer
+      center={initCenter}
+      zoom={DEFAULT_ZOOM}
+      minZoom={ZOOM_MIN}
+      maxZoom={ZOOM_MAX}
+      scrollWheelZoom
+      doubleClickZoom
+      zoomControl={false}
+      className={styles.map_container}
+    >
+      <InnerMapContainer initCenter={initCenter} setMarkers={setMarkers} />
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
+      {markers.map((m) => (
+        <Markers
+          key={`${m.name}-${m.coordinates.lat}-${m.coordinates.lng}`}
+          marker={m}
+          isSelected={false}
         />
-        {markers.map((m) => (
-          <Markers
-            key={`${m.name}-${m.coordinates.lat}-${m.coordinates.lng}`}
-            marker={m}
-            isSelected={props.select !== undefined && props.select === m.id}
-          />
-        ))}
-      </MapContainer>
-    </div>
+      ))}
+    </MapContainer>
   );
 }
 
@@ -64,5 +58,5 @@ function InnerMapContainer({ initCenter, setMarkers }: InnerMapContainerProps) {
     setMarkers(markers);
   }, [setMarkers, markers]);
 
-  return <></>;
+  return <div />;
 }
