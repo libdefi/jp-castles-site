@@ -19,7 +19,6 @@ export default function useMarker(initCenter: LatLng): UseMarker {
 
   useEffect(() => {
     (async () => {
-      console.log({ zoom });
       const range: CoordinatesRange = {
         lat: [center.lat - 2, center.lat + 2],
         lng: [center.lng - 2, center.lng + 2],

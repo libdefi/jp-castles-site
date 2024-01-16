@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <main className={styles.main}>
       <About />
-      <CastleMap className={styles.map} />
+      {/* <CastleMap className={styles.map} /> */}
     </main>
   );
 }
