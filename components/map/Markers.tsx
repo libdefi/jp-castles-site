@@ -4,18 +4,25 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Marker, Popup, useMapEvents } from "react-leaflet";
 import { Icon, icon, Marker as Mark } from "leaflet";
 import { CastleMarker } from "@/types/map";
-import { MARKER_COLORS, MARKER_COLOR_IMG } from "@/const/marker";
+import {
+  MARKER_COLORS,
+  MARKER_COLOR_IMG,
+  MARKER_SELECT_COLOR,
+} from "@/const/marker";
 
 type Props = {
   marker: CastleMarker;
+  isSelected: boolean;
 };
 
 export default function Markers(props: Props) {
-  const { marker } = props;
+  const { marker, isSelected } = props;
 
   const [markerIcon, setMarkerIcon] = useState<Icon>(
     icon({
-      iconUrl: MARKER_COLOR_IMG[0].src,
+      iconUrl: isSelected
+        ? MARKER_SELECT_COLOR.img.src
+        : MARKER_COLOR_IMG[0].src,
       iconSize: [40, 40],
       iconAnchor: [20, 40],
       popupAnchor: [0, -40],
@@ -48,17 +55,15 @@ export default function Markers(props: Props) {
   });
 
   useEffect(() => {
-    const img = MARKER_COLORS.find((m) => m.color === marker.color);
-
     const markerIconSnap = icon({
-      iconUrl: img?.img.src || MARKER_COLOR_IMG[0].src,
+      iconUrl: marker.img.src,
       iconSize: [40, 40],
       iconAnchor: [20, 40],
       popupAnchor: [0, -40],
     });
 
     setMarkerIcon(markerIconSnap);
-  }, [marker.color]);
+  }, [marker.img.src]);
 
   return (
     <Marker

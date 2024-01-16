@@ -1,11 +1,21 @@
 import { MARKER_COLOR_NAMES } from "@/const/marker";
-import { Coordinates } from "./castle";
+import { StaticImageData } from "next/image";
 
 export type MarkerColor = (typeof MARKER_COLOR_NAMES)[number];
 
+export type Coordinates = {
+  lat: number;
+  lng: number;
+};
+
 export type CastleMarker = {
-  id: number;
+  id: string;
   name: string;
   coordinates: Coordinates;
-  color?: MarkerColor;
+  img: StaticImageData;
+};
+
+export type CoordinatesRange = {
+  lat: [number, number];
+  lng: [number, number];
 };
