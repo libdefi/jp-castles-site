@@ -27,6 +27,7 @@ export default function CastleMap(props: Props) {
         maxZoom={ZOOM_MAX}
         scrollWheelZoom
         doubleClickZoom
+        zoomControl={false}
         className={styles.map_container}
       >
         <InnerMapContainer initCenter={initCenter} setMarkers={setMarkers} />
