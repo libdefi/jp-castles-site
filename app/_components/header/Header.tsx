@@ -1,5 +1,5 @@
-import styles from "./Header.module.scss";
 import { Noto_Serif_JP } from "next/font/google";
+import styles from "./Header.module.scss";
 
 const noto_serif = Noto_Serif_JP({ subsets: ["latin"], weight: "700" });
 

@@ -1,14 +1,14 @@
 "use client";
 
-import "leaflet/dist/leaflet.css";
-import styles from "./Map.module.scss";
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-import Markers from "./Markers";
-import useMarker from "@/hooks/useMarker";
-import { LatLng } from "leaflet";
-import { CastleMarker } from "@/types/map";
-import { useEffect, useState } from "react";
 import { DEFAULT_ZOOM, ZOOM_MAX, ZOOM_MIN } from "@/const/scale";
+import useMarker from "@/hooks/useMarker";
+import { CastleMarker } from "@/types/map";
+import { LatLng } from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { useEffect, useState } from "react";
+import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
+import styles from "./Map.module.scss";
+import Markers from "./Markers";
 
 export default function CastleMap() {
   const initCenter = new LatLng(35.1855, 136.89939);

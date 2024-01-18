@@ -1,5 +1,5 @@
-import styles from "./Card.module.scss";
 import { ReactNode } from "react";
+import styles from "./Card.module.scss";
 
 type Props = {
   children: ReactNode;

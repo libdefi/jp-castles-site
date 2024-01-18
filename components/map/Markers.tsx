@@ -1,10 +1,10 @@
 "use client";
 
+import { MARKER_COLOR_IMG, MARKER_SELECT_COLOR } from "@/const/marker";
+import { CastleMarker } from "@/types/map";
+import { Icon, Marker as Mark, icon } from "leaflet";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Marker, Popup, useMapEvents } from "react-leaflet";
-import { Icon, icon, Marker as Mark } from "leaflet";
-import { CastleMarker } from "@/types/map";
-import { MARKER_COLOR_IMG, MARKER_SELECT_COLOR } from "@/const/marker";
 
 type Props = {
   marker: CastleMarker;
@@ -22,7 +22,7 @@ export default function Markers(props: Props) {
       iconSize: [40, 40],
       iconAnchor: [20, 40],
       popupAnchor: [0, -40],
-    })
+    }),
   );
 
   useEffect(() => {
