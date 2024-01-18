@@ -4,11 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Marker, Popup, useMapEvents } from "react-leaflet";
 import { Icon, icon, Marker as Mark } from "leaflet";
 import { CastleMarker } from "@/types/map";
-import {
-  MARKER_COLORS,
-  MARKER_COLOR_IMG,
-  MARKER_SELECT_COLOR,
-} from "@/const/marker";
+import { MARKER_COLOR_IMG, MARKER_SELECT_COLOR } from "@/const/marker";
 
 type Props = {
   marker: CastleMarker;
@@ -17,7 +13,7 @@ type Props = {
 
 export default function Markers(props: Props) {
   const { marker, isSelected } = props;
-
+  const markerRef = useRef<Mark>(null);
   const [markerIcon, setMarkerIcon] = useState<Icon>(
     icon({
       iconUrl: isSelected
@@ -28,31 +24,6 @@ export default function Markers(props: Props) {
       popupAnchor: [0, -40],
     })
   );
-
-  const markerRef = useRef<Mark>(null);
-
-  const eventHandlers = useMemo(
-    () => ({
-      dragstart: () => {
-        const marker = markerRef.current;
-        marker?.setOpacity(0.6);
-      },
-      dragend: () => {
-        const marker = markerRef.current;
-        marker?.setOpacity(1);
-      },
-    }),
-    []
-  );
-
-  useMapEvents({
-    dblclick(e) {
-      console.log(e.latlng);
-    },
-    contextmenu() {},
-    dragend() {},
-    zoomend() {},
-  });
 
   useEffect(() => {
     const markerIconSnap = icon({
@@ -66,13 +37,7 @@ export default function Markers(props: Props) {
   }, [marker.img.src]);
 
   return (
-    <Marker
-      ref={markerRef}
-      position={marker.coordinates}
-      draggable={true}
-      icon={markerIcon}
-      eventHandlers={eventHandlers}
-    >
+    <Marker ref={markerRef} position={marker.coordinates} icon={markerIcon}>
       <Popup>
         <a href={`/castle/${marker.id}`}>{marker.name}</a>
       </Popup>

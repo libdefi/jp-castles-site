@@ -1,5 +1,5 @@
-import { CastleMarker } from "./map";
+import { CastleMarkerScale } from "./map";
 
 export type CastleMarkerRes = {
-  markers: CastleMarker[];
+  markers: CastleMarkerScale[];
 };

@@ -8,7 +8,7 @@ import useMarker from "@/hooks/useMarker";
 import { LatLng } from "leaflet";
 import { CastleMarker } from "@/types/map";
 import { useEffect, useState } from "react";
-import { DEFAULT_ZOOM, ZOOM_MAX, ZOOM_MIN } from "@/const/zoom";
+import { DEFAULT_ZOOM, ZOOM_MAX, ZOOM_MIN } from "@/const/scale";
 
 export default function CastleMap() {
   const initCenter = new LatLng(35.1855, 136.89939);

@@ -15,6 +15,13 @@ export type CastleMarker = {
   img: StaticImageData;
 };
 
+export type CastleMarkerScale = {
+  id: string;
+  name: string;
+  coordinates: Coordinates;
+  scale: number;
+};
+
 export type CoordinatesRange = {
   lat: [number, number];
   lng: [number, number];

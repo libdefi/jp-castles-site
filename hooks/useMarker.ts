@@ -1,7 +1,6 @@
 import { fetchCastleMarkers } from "@/components/api/castle";
-import { DEFAULT_ZOOM, ZOOM_LEVEL_MAP } from "@/const/zoom";
+import { DEFAULT_ZOOM, ZOOM_TO_SCALE_MAP, scaleToMarker } from "@/const/scale";
 import { CastleMarker, Coordinates, CoordinatesRange } from "@/types/map";
-import { LatLng } from "leaflet";
 import { useEffect, useState } from "react";
 
 type UseMarker = [
@@ -20,14 +19,21 @@ export default function useMarker(initCenter: Coordinates): UseMarker {
   useEffect(() => {
     (async () => {
       const range: CoordinatesRange = {
-        lat: [center.lat - 2, center.lat + 2],
-        lng: [center.lng - 2, center.lng + 2],
+        lat: [center.lat - 0.1, center.lat + 0.1],
+        lng: [center.lng - 0.1, center.lng + 0.1],
       };
-      const scale = ZOOM_LEVEL_MAP[zoom] || 1;
+      const scale = ZOOM_TO_SCALE_MAP[zoom] || 1;
       const markerSnap = await fetchCastleMarkers(range, scale);
-      if (markerSnap) {
-        setMarkers(markerSnap.markers);
-      }
+      if (!markerSnap) return;
+
+      const markers: CastleMarker[] = markerSnap.markers.map((m) => ({
+        id: m.id,
+        name: m.name,
+        coordinates: m.coordinates,
+        img: scaleToMarker(m.scale).img,
+      }));
+
+      setMarkers(markers);
     })();
   }, [center, zoom]);
 
