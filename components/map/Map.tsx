@@ -47,11 +47,18 @@ type InnerMapContainerProps = {
 };
 
 function InnerMapContainer({ initCenter, setMarkers }: InnerMapContainerProps) {
-  const [markers, { setCenter, setZoom }] = useMarker(initCenter);
+  const [markers, { setZoom, setBounds }] = useMarker();
 
   useMapEvents({
-    moveend: (e) => setCenter(e.target.getCenter()),
-    zoomend: (e) => setZoom(e.target.getZoom()),
+    moveend: (e) => setBounds(e.target.getBounds()),
+    zoomend: (e) => {
+      setZoom(e.target.getZoom());
+      setBounds(e.target.getBounds());
+    },
+    layeradd: (e) => {
+      setZoom(e.target.getZoom());
+      setBounds(e.target.getBounds());
+    },
   });
 
   useEffect(() => {

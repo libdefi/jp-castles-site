@@ -1,6 +1,7 @@
 import { CastleMarker, CoordinatesRange } from "@/types/map";
 import { CastleMarkerRes } from "@/types/response";
 import axios from "axios";
+import { LatLngBounds } from "leaflet";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -31,14 +32,19 @@ export const commonGetFetch = async <T>(
  * @returns {Promise<CastleMarker[] | undefined>} マーカー情報
  */
 export async function fetchCastleMarkers(
-  range: CoordinatesRange,
+  bounds: LatLngBounds,
   scale: number
 ): Promise<CastleMarkerRes | undefined> {
+  const n = bounds.getNorth();
+  const e = bounds.getEast();
+  const s = bounds.getSouth();
+  const w = bounds.getWest();
+
   const url = new URL("markers", BASE_URL);
-  url.searchParams.set("latMin", String(range.lat[0]));
-  url.searchParams.set("latMax", String(range.lat[1]));
-  url.searchParams.set("lngMin", String(range.lng[0]));
-  url.searchParams.set("lngMax", String(range.lng[1]));
+  url.searchParams.set("latMin", String(s));
+  url.searchParams.set("latMax", String(n));
+  url.searchParams.set("lngMin", String(w));
+  url.searchParams.set("lngMax", String(e));
   url.searchParams.set("scale", String(scale));
 
   return commonGetFetch<CastleMarkerRes>(url.toString());

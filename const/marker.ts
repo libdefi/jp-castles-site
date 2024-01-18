@@ -1,12 +1,18 @@
+import markerStar from "@/assets/markers/star.png";
 import markerCastleBlack from "@/assets/markers/castle-black.png";
 import markerCastleBlue from "@/assets/markers/castle-blue.png";
 import markerCastleRed from "@/assets/markers/castle-red.png";
+import markerCastleGreen from "@/assets/markers/castle-green.png";
 import markerCastleYellow from "@/assets/markers/castle-yellow.png";
 
 export const MARKER_COLORS = [
   {
-    color: "black",
-    img: markerCastleBlack,
+    color: "star",
+    img: markerStar,
+  },
+  {
+    color: "green",
+    img: markerCastleGreen,
   },
   {
     color: "blue",
@@ -15,6 +21,10 @@ export const MARKER_COLORS = [
   {
     color: "red",
     img: markerCastleRed,
+  },
+  {
+    color: "black",
+    img: markerCastleBlack,
   },
 ] as const;
 

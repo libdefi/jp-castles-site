@@ -9,8 +9,8 @@ type ZoomToScaleMap = {
  */
 export const ZOOM_TO_SCALE_MAP: ZoomToScaleMap = {
   7: 5,
-  8: 4,
-  9: 3,
+  8: 5,
+  9: 4,
   10: 3,
   11: 2,
   12: 2,
@@ -19,10 +19,6 @@ export const ZOOM_TO_SCALE_MAP: ZoomToScaleMap = {
   15: 1,
   16: 1,
   17: 1,
-};
-
-type ScaleToMarker = {
-  [key: number]: (typeof MARKER_COLORS)[number];
 };
 
 /**
