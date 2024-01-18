@@ -1,5 +1,4 @@
 import { CastleMarkerRes } from "@/types/response";
-import axios from "axios";
 import { LatLngBounds } from "leaflet";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -10,15 +9,12 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
  * @returns {Promise<T | undefined>} レスポンスデータ
  */
 export const commonGetFetch = async <T>(
-  path: string,
+  path: string
 ): Promise<T | undefined> => {
   const url = new URL(path, BASE_URL).href;
 
-  return axios
-    .get(path)
-    .then((res) => {
-      return res.data as T;
-    })
+  return fetch(url)
+    .then((res) => res.json())
     .catch((err) => {
       console.error(err);
       return undefined;
@@ -32,7 +28,7 @@ export const commonGetFetch = async <T>(
  */
 export async function fetchCastleMarkers(
   bounds: LatLngBounds,
-  scale: number,
+  scale: number
 ): Promise<CastleMarkerRes | undefined> {
   const n = bounds.getNorth();
   const e = bounds.getEast();
