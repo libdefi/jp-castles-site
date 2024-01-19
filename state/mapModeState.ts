@@ -1,6 +1,5 @@
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import { recoilKeyHashSet } from "./keys";
-import { useEffect } from "react";
 
 const mapMode = atom<"edit" | "view">({
   key: recoilKeyHashSet.mapMode,
