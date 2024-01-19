@@ -46,7 +46,9 @@ export default function Markers(props: Props) {
         >
           {marker.name}
         </a>
-        <Edit className={styles.edit} onClick={selectEditMarker} />
+        {mode === "edit" && (
+          <Edit className={styles.edit} onClick={selectEditMarker} />
+        )}
       </Popup>
     </Marker>
   );
