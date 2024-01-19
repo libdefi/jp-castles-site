@@ -12,9 +12,11 @@ import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import getId from "../util";
 import styles from "./Map.module.scss";
 import Markers from "./Markers";
+import { useSelectMarkerIdState } from "@/state/selectMarkerIdState";
 
 export default function CastleMap() {
   const [markers, setMarkers] = useState<CastleMarker[]>([]);
+  const selectMarkerId = useSelectMarkerIdState();
 
   const initCenter = new LatLng(35.1855, 136.89939);
   const sw = new LatLng(55, 160);
@@ -39,7 +41,11 @@ export default function CastleMap() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {markers.map((m) => (
-        <Markers key={getId(m)} marker={m} isSelected={false} />
+        <Markers
+          key={getId(m)}
+          marker={m}
+          isSelected={m.id === selectMarkerId}
+        />
       ))}
     </MapContainer>
   );

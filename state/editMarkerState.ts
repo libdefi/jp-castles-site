@@ -2,7 +2,6 @@ import getId from "@/components/util";
 import { MARKER_COLORS } from "@/const/marker";
 import { CastleMarker, Coordinates } from "@/types/map";
 import { StaticImageData } from "next/image";
-import { use, useEffect } from "react";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import { recoilKeyHashSet } from "./keys";
 
@@ -21,7 +20,7 @@ const editMarker = atom<CastleMarker>({
 
 /**
  * @description 編集中のマーカーの状態を取得する
- * @returns　編集中のマーカーの状態
+ * @returns 編集中のマーカーの状態
  */
 export function useEditMarkerState() {
   return useRecoilValue(editMarker);
@@ -29,7 +28,7 @@ export function useEditMarkerState() {
 
 /**
  * @description 編集中のマーカーの状態を更新する
- * @returns　編集中のマーカーの状態を更新する関数
+ * @returns 編集中のマーカーの状態を更新する関数
  */
 export function useEditMarkerMutators() {
   const [_editMarkerState, setEditMarkerState] = useRecoilState(editMarker);
