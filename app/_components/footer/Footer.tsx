@@ -1,8 +1,14 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import styles from "./Footer.module.scss";
 
 export default function Footer() {
+  const path = usePathname();
+  const isHide = path === "/map";
+
   return (
-    <footer className={styles.footer}>
+    <footer className={isHide ? styles.hide : styles.footer}>
       <p>SatooRu © 2023 Copyright.</p>
     </footer>
   );
