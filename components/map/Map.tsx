@@ -2,11 +2,14 @@
 
 import { DEFAULT_ZOOM, ZOOM_MAX, ZOOM_MIN } from "@/const/scale";
 import useMarker from "@/hooks/useMarker";
+import { useEditMarkerMutators } from "@/state/editMarkerState";
+import { useMapModeState } from "@/state/mapModeState";
 import { CastleMarker } from "@/types/map";
 import { LatLng, LatLngBounds, LatLngBoundsExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
+import getId from "../util";
 import styles from "./Map.module.scss";
 import Markers from "./Markers";
 
@@ -26,7 +29,7 @@ export default function CastleMap() {
       maxZoom={ZOOM_MAX}
       maxBounds={maxBounds}
       scrollWheelZoom
-      doubleClickZoom
+      doubleClickZoom={false}
       zoomControl={false}
       className={styles.map_container}
     >
@@ -36,11 +39,7 @@ export default function CastleMap() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {markers.map((m) => (
-        <Markers
-          key={`${m.name}-${m.coordinates.lat}-${m.coordinates.lng}`}
-          marker={m}
-          isSelected={false}
-        />
+        <Markers key={getId(m)} marker={m} isSelected={false} />
       ))}
     </MapContainer>
   );
@@ -53,6 +52,8 @@ type InnerMapContainerProps = {
 
 function InnerMapContainer({ initCenter, setMarkers }: InnerMapContainerProps) {
   const [markers, { setZoom, setBounds }] = useMarker();
+  const { setCoordinates } = useEditMarkerMutators();
+  const mode = useMapModeState();
 
   useMapEvents({
     moveend: (e) => setBounds(e.target.getBounds()),
@@ -63,6 +64,9 @@ function InnerMapContainer({ initCenter, setMarkers }: InnerMapContainerProps) {
     layeradd: (e) => {
       setZoom(e.target.getZoom());
       setBounds(e.target.getBounds());
+    },
+    dblclick: (e) => {
+      if (mode === "edit") setCoordinates(e.latlng);
     },
   });
 

@@ -1,3 +1,5 @@
+"use client";
+
 import CastleMap from "@/components/map";
 import About from "./_components/sections/about/About";
 import styles from "./page.module.scss";
