@@ -1,7 +1,8 @@
 import getId from "@/components/util";
-import { MARKER_COLORS } from "@/const/marker";
+import { MARKERS } from "@/const/marker";
 import { CastleMarker, Coordinates } from "@/types/map";
 import { StaticImageData } from "next/image";
+import { useEffect } from "react";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import { recoilKeyHashSet } from "./keys";
 
@@ -14,7 +15,7 @@ const editMarker = atom<CastleMarker>({
       lat: 0,
       lng: 0,
     },
-    img: MARKER_COLORS[0].img,
+    img: MARKERS[0].img,
   },
 });
 
@@ -34,6 +35,14 @@ export function useEditMarkerMutators() {
   const [_editMarkerState, setEditMarkerState] = useRecoilState(editMarker);
 
   /**
+   * @description マーカーのIDを更新する
+   * @param id 更新するID
+   */
+  function setId(id: string) {
+    setEditMarkerState((prev) => ({ ...prev, id }));
+  }
+
+  /**
    * @description マーカーの名前を更新する
    * @param name 更新する名前
    */
@@ -49,7 +58,6 @@ export function useEditMarkerMutators() {
     setEditMarkerState((prev) => ({
       ...prev,
       coordinates,
-      id: getId({ ...prev, coordinates }),
     }));
   }
 
@@ -61,5 +69,13 @@ export function useEditMarkerMutators() {
     setEditMarkerState((prev) => ({ ...prev, img }));
   }
 
-  return { setName, setCoordinates, setImg };
+  /**
+   * @description マーカーを更新する
+   * @param marker 更新するマーカー
+   */
+  function setMarker(marker: CastleMarker) {
+    setEditMarkerState(marker);
+  }
+
+  return { setId, setName, setCoordinates, setImg, setMarker };
 }

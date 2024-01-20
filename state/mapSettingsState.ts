@@ -4,14 +4,19 @@ import { recoilKeyHashSet } from "./keys";
 import { LatLng } from "leaflet";
 import { DEFAULT_ZOOM } from "@/const/scale";
 import { useEffect } from "react";
-import { getLocalStorage } from "@/foundations/useLocalStorage";
+import {
+  getLocalStorage,
+  setLocalStorage,
+} from "@/foundations/useLocalStorage";
+
+const init = {
+  center: new LatLng(35.1855, 136.89939),
+  zoom: DEFAULT_ZOOM,
+};
 
 const mapSettings = atom<MapSettings>({
   key: recoilKeyHashSet.mapSettings,
-  default: getLocalStorage<MapSettings>("mapSettings", {
-    center: new LatLng(35.1855, 136.89939),
-    zoom: DEFAULT_ZOOM,
-  }),
+  default: getLocalStorage<MapSettings>("mapSettings", init),
 });
 
 /**
@@ -27,14 +32,15 @@ export function useMapSettingsState() {
  * @returns マップの設定を変更する関数
  */
 export function useMapSettingsMutator() {
-  const [mapSettingsState, setMapSettingsState] = useRecoilState(mapSettings);
+  const [mapSettingsState, _] = useRecoilState(mapSettings);
 
   /**
    * @description 中心位置を変更する
    * @param center マップの中心位置
    */
   function setSettingsCenter(center: LatLng) {
-    setMapSettingsState((v) => ({ ...v, center }));
+    const v = getLocalStorage("mapSettings", init);
+    setLocalStorage<MapSettings>("mapSettings", { ...v, center });
   }
 
   /**
@@ -42,7 +48,8 @@ export function useMapSettingsMutator() {
    * @param zoom ズームレベル
    */
   function setSettingsZoom(zoom: number) {
-    setMapSettingsState((v) => ({ ...v, zoom }));
+    const v = getLocalStorage("mapSettings", init);
+    setLocalStorage<MapSettings>("mapSettings", { ...v, zoom });
   }
 
   useEffect(() => {

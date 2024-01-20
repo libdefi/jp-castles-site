@@ -1,27 +1,30 @@
 "use client";
 
-import { DEFAULT_ZOOM, ZOOM_MAX, ZOOM_MIN } from "@/const/scale";
+import { ZOOM_MAX, ZOOM_MIN } from "@/const/scale";
 import useMarker from "@/hooks/useMarker";
-import { useEditMarkerMutators } from "@/state/editMarkerState";
+import {
+  useEditMarkerMutators,
+  useEditMarkerState,
+} from "@/state/editMarkerState";
 import { useMapModeState } from "@/state/mapModeState";
+import {
+  useMapSettingsMutator,
+  useMapSettingsState,
+} from "@/state/mapSettingsState";
 import { CastleMarker } from "@/types/map";
 import { LatLng, LatLngBounds, LatLngBoundsExpression } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import getId from "../util";
+import EditMarker from "./EditMarker";
 import styles from "./Map.module.scss";
 import Markers from "./Markers";
-import { useSelectMarkerIdState } from "@/state/selectMarkerIdState";
-import {
-  useMapSettingsMutator,
-  useMapSettingsState,
-} from "@/state/mapSettingsState";
 
 export default function CastleMap() {
   const [markers, setMarkers] = useState<CastleMarker[]>([]);
-  const selectMarkerId = useSelectMarkerIdState();
   const mapSettings = useMapSettingsState();
+  const editMarker = useEditMarkerState();
 
   const sw = new LatLng(55, 160);
   const ne = new LatLng(18, 115);
@@ -45,12 +48,9 @@ export default function CastleMap() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {markers.map((m) => (
-        <Markers
-          key={getId(m)}
-          marker={m}
-          isSelected={m.id === selectMarkerId}
-        />
+        <Markers key={getId(m)} marker={m} isEdited={false} />
       ))}
+      <EditMarker marker={editMarker} />
     </MapContainer>
   );
 }

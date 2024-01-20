@@ -1,4 +1,4 @@
-import { MARKER_COLORS } from "./marker";
+import { MARKERS } from "./marker";
 
 type ZoomToScaleMap = {
   [key: number]: number;
@@ -42,7 +42,7 @@ export const DEFAULT_ZOOM = 14;
  * @returns マーカー
  */
 export function scaleToMarker(scale: number) {
-  const len = MARKER_COLORS.length;
+  const len = MARKERS.length;
   const i = scale - 1 < len ? scale - 1 : len - 1;
-  return MARKER_COLORS[i];
+  return MARKERS[i];
 }
