@@ -1,4 +1,4 @@
-import { fetchCastleMarkers } from "@/components/api/castle";
+import { fetchCastleMarkers } from "@/components/api/marker";
 import { DEFAULT_ZOOM, ZOOM_TO_SCALE_MAP, scaleToMarker } from "@/const/scale";
 import { CastleMarker } from "@/types/map";
 import { LatLngBounds } from "leaflet";

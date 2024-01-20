@@ -1,4 +1,4 @@
-import { CastleMarkerRes } from "@/types/response";
+import { CastleMarkerRes, MarkerDataRes } from "@/types/response";
 import { LatLngBounds } from "leaflet";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -22,9 +22,9 @@ export const commonGetFetch = async <T>(
 };
 
 /**
- * @description マーカー情報を取得する
+ * @description マーカーを取得する
  * @param range 緯度経度の範囲
- * @returns {Promise<CastleMarker[] | undefined>} マーカー情報
+ * @returns {Promise<CastleMarkerRes | undefined>} マーカー
  */
 export async function fetchCastleMarkers(
   bounds: LatLngBounds,
@@ -43,4 +43,16 @@ export async function fetchCastleMarkers(
   url.searchParams.set("scale", String(scale));
 
   return commonGetFetch<CastleMarkerRes>(url.toString());
+}
+
+/**
+ * @description マーカー情報を取得する
+ * @returns {Promise<MarkerDataRes | undefined>} マーカー情報
+ */
+export async function fetchCastleMarkerData(): Promise<
+  MarkerDataRes | undefined
+> {
+  const url = new URL("markers/data", BASE_URL);
+
+  return commonGetFetch<MarkerDataRes>(url.toString());
 }

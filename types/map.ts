@@ -32,3 +32,8 @@ export type MapSettings = {
   center: LatLng;
   zoom: number;
 };
+
+export type MarkerData = {
+  num: number;
+  updateAt: number;
+};
