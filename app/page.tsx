@@ -1,16 +1,14 @@
 "use client";
 
-import CastleMap from "@/components/map";
-import About from "./_components/sections/about/About";
+import About from "./_components/sections/about";
+import MiniMap from "./_components/sections/miniMap";
 import styles from "./page.module.scss";
 
 export default function Page() {
   return (
     <main className={styles.main}>
       <About />
-      <div className={styles.map}>
-        <CastleMap />
-      </div>
+      <MiniMap />
     </main>
   );
 }
