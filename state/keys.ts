@@ -1,5 +1,10 @@
 // Keyの配列
-const recoilKeys = ["selectMarkerId", "editMarker", "mapMode"] as const;
+const recoilKeys = [
+  "selectMarkerId",
+  "editMarker",
+  "mapMode",
+  "mapSettings",
+] as const;
 
 // Key: Keyのオブジェクト
 export const recoilKeyHashSet = Object.fromEntries(

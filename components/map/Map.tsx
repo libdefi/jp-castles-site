@@ -13,20 +13,24 @@ import getId from "../util";
 import styles from "./Map.module.scss";
 import Markers from "./Markers";
 import { useSelectMarkerIdState } from "@/state/selectMarkerIdState";
+import {
+  useMapSettingsMutator,
+  useMapSettingsState,
+} from "@/state/mapSettingsState";
 
 export default function CastleMap() {
   const [markers, setMarkers] = useState<CastleMarker[]>([]);
   const selectMarkerId = useSelectMarkerIdState();
+  const mapSettings = useMapSettingsState();
 
-  const initCenter = new LatLng(35.1855, 136.89939);
   const sw = new LatLng(55, 160);
   const ne = new LatLng(18, 115);
   const maxBounds: LatLngBoundsExpression = new LatLngBounds(sw, ne);
 
   return (
     <MapContainer
-      center={initCenter}
-      zoom={DEFAULT_ZOOM}
+      center={mapSettings.center}
+      zoom={mapSettings.zoom}
       minZoom={ZOOM_MIN}
       maxZoom={ZOOM_MAX}
       maxBounds={maxBounds}
@@ -35,7 +39,7 @@ export default function CastleMap() {
       zoomControl={false}
       className={styles.map_container}
     >
-      <InnerMapContainer initCenter={initCenter} setMarkers={setMarkers} />
+      <InnerMapContainer setMarkers={setMarkers} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -52,20 +56,24 @@ export default function CastleMap() {
 }
 
 type InnerMapContainerProps = {
-  initCenter: LatLng;
   setMarkers: (markers: CastleMarker[]) => void;
 };
 
-function InnerMapContainer({ initCenter, setMarkers }: InnerMapContainerProps) {
+function InnerMapContainer({ setMarkers }: InnerMapContainerProps) {
   const [markers, { setZoom, setBounds }] = useMarker();
   const { setCoordinates } = useEditMarkerMutators();
   const mode = useMapModeState();
+  const { setSettingsCenter, setSettingsZoom } = useMapSettingsMutator();
 
   useMapEvents({
-    moveend: (e) => setBounds(e.target.getBounds()),
+    moveend: (e) => {
+      setBounds(e.target.getBounds());
+      setSettingsCenter(e.target.getCenter());
+    },
     zoomend: (e) => {
       setZoom(e.target.getZoom());
       setBounds(e.target.getBounds());
+      setSettingsZoom(e.target.getZoom());
     },
     layeradd: (e) => {
       setZoom(e.target.getZoom());

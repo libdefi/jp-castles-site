@@ -1,4 +1,5 @@
 import { MARKER_COLOR_NAMES } from "@/const/marker";
+import { LatLng } from "leaflet";
 import { StaticImageData } from "next/image";
 
 export type MarkerColor = (typeof MARKER_COLOR_NAMES)[number];
@@ -25,4 +26,9 @@ export type CastleMarkerScale = {
 export type CoordinatesRange = {
   lat: [number, number];
   lng: [number, number];
+};
+
+export type MapSettings = {
+  center: LatLng;
+  zoom: number;
 };
