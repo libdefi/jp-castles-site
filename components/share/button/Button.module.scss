@@ -20,4 +20,9 @@
     background-color: var(--background);
     border: 1px solid var(--primary);
   }
+
+  &.danger {
+    color: var(--background);
+    background-color: var(--danger);
+  }
 }

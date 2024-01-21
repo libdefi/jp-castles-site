@@ -12,6 +12,7 @@ import {
 import { LatLngBounds } from 'leaflet';
 import {
   BASE_URL,
+  commonDeleteFetch,
   commonGetFetch,
   commonPostFetch,
   commonPutFetch,
@@ -82,5 +83,20 @@ export async function fetchUpdateCastleMarker(
   return commonPutFetch<CastleMarkerRes, { marker: EditMarker }>(
     url.toString(),
     { marker }
+  );
+}
+
+/**
+ * @description マーカーを削除する
+ * @param id マーカーID
+ * @returns {Promise<string[] | undefined>} マーカー
+ */
+export async function fetchDeleteCastleMarker(
+  id: string
+): Promise<{ ids: string[] } | undefined> {
+  const url = new URL('markers', BASE_URL);
+  return commonDeleteFetch<{ ids: string[] }, { ids: string[] }>(
+    url.toString(),
+    { ids: [id] }
   );
 }

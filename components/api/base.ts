@@ -65,3 +65,27 @@ export const commonPutFetch = async <T, U>(
       return undefined;
     });
 };
+
+/**
+ * @description DELETEリクエストを送信する
+ * @param path リクエストパス
+ * @param body リクエストボディ
+ * @returns {Promise<T | undefined>} レスポンスデータ
+ */
+export const commonDeleteFetch = async <T, U>(
+  path: string,
+  body: U
+): Promise<T | undefined> => {
+  const url = new URL(path, BASE_URL).href;
+
+  return fetch(url, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+    .then((res) => res.json())
+    .catch((err) => {
+      console.error(err);
+      return undefined;
+    });
+};

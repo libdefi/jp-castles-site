@@ -1,5 +1,6 @@
 import {
   fetchCreateCastleMarker,
+  fetchDeleteCastleMarker,
   fetchUpdateCastleMarker,
 } from '@/components/api/marker';
 import Button from '@/components/share/button/Button';
@@ -11,6 +12,7 @@ import {
 import { CastleMarkerRes, CastleMarkersRes } from '@/types/response';
 import { LatLng } from 'leaflet';
 import styles from './index.module.scss';
+import useMarker from '@/hooks/useMarker';
 
 const SCALE_MAP = [
   {
@@ -41,6 +43,7 @@ const SCALE_MAP = [
 
 export default function EditInfo() {
   const { setId, setName, setScale, setCoordinates } = useEditMarkerMutators();
+  const [_, { reload }] = useMarker();
   const editMarker = useEditMarkerState();
 
   function handlerScaleChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -62,6 +65,30 @@ export default function EditInfo() {
     }
 
     alert('送信しました。');
+    setId(null);
+    reload();
+  }
+
+  async function remove() {
+    if (editMarker.id === null) {
+      alert('id が指定されていません。');
+      return;
+    }
+    if (editMarker.id.startsWith('new')) {
+      alert('新規作成されたマーカーは削除できません。');
+      return;
+    }
+
+    const res = confirm('削除します。');
+    if (!res) return;
+
+    const idRes = await fetchDeleteCastleMarker(editMarker.id);
+    if (idRes === undefined) {
+      alert('削除に失敗しました。');
+      return;
+    }
+
+    alert('削除しました。');
     setId(null);
   }
 
@@ -137,6 +164,11 @@ export default function EditInfo() {
             <Button outline onClick={cancel}>
               選択解除
             </Button>
+            {editMarker.id.startsWith('new') || (
+              <Button danger onClick={remove}>
+                削除
+              </Button>
+            )}
             <Button onClick={submit} className={styles.submit}>
               送信
             </Button>

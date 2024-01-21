@@ -1,9 +1,10 @@
 // Keyの配列
 const recoilKeys = [
-  "selectMarkerId",
-  "editMarker",
-  "mapMode",
-  "mapSettings",
+  'selectMarkerId',
+  'editMarker',
+  'mapMode',
+  'mapSettings',
+  'markerReload',
 ] as const;
 
 // Key: Keyのオブジェクト
@@ -14,5 +15,5 @@ export const recoilKeyHashSet = Object.fromEntries(
 // 重複チェック
 const set = new Set(recoilKeys);
 if (set.size !== recoilKeys.length) {
-  throw Error("recoilKeyが重複しています");
+  throw Error('recoilKeyが重複しています');
 }
