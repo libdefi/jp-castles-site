@@ -1,9 +1,9 @@
 "use client";
 
 import CastleMap from "@/components/map";
-import styles from "./page.module.scss";
 import { useMapModeMutators } from "@/state/mapModeState";
 import { useEffect } from "react";
+import styles from "./page.module.scss";
 
 export default function Page() {
   const { setMapModeState } = useMapModeMutators();
