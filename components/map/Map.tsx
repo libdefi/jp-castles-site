@@ -16,10 +16,12 @@ import { LatLng, LatLngBounds, LatLngBoundsExpression } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
+import { ArrowDown } from '../icons/Icons';
 import getId from '../util';
 import EditMarker from './EditMarker';
 import styles from './Map.module.scss';
 import Markers from './Markers';
+import { usePathname } from 'next/navigation';
 
 export default function CastleMap() {
   const [markers, setMarkers] = useState<CastleMarker[]>([]);
@@ -42,6 +44,7 @@ export default function CastleMap() {
       zoomControl={false}
       className={styles.map_container}
     >
+      <MoveDown />
       <InnerMapContainer setMarkers={setMarkers} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -89,4 +92,26 @@ function InnerMapContainer({ setMarkers }: InnerMapContainerProps) {
   }, [setMarkers, markers]);
 
   return <div />;
+}
+
+function MoveDown() {
+  const path = usePathname();
+  const isHide = ['/map', '/'].includes(path);
+
+  function moveDown() {
+    if (window === undefined) return;
+
+    const y = window.scrollY + window.innerHeight * 0.5;
+    window.scrollTo({
+      top: y,
+      behavior: 'smooth',
+    });
+  }
+
+  return (
+    <ArrowDown
+      className={`${styles.move_down} ${isHide && styles.hide}`}
+      onClick={moveDown}
+    />
+  );
 }
