@@ -86,10 +86,26 @@ export function useEditMarkerMutators() {
     setEditMarkerState((v) => ({ ...v, ...marker }));
   }
 
+  /**
+   * @description マーカーの状態をリセットする
+   */
+  function reset() {
+    setEditMarkerState({
+      id: null,
+      name: '',
+      coordinates: {
+        lat: 0,
+        lng: 0,
+      },
+      img: MARKERS[0].img,
+      scale: 1,
+    });
+  }
+
   useEffect(() => {
     const img = scaleToMarker(editMarkerState.scale).img;
     setImg(img);
   }, [editMarkerState.scale]);
 
-  return { setId, setName, setCoordinates, setScale, setMarker };
+  return { setId, setName, setCoordinates, setScale, setMarker, reset };
 }

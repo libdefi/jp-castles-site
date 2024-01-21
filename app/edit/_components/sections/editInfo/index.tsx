@@ -42,7 +42,8 @@ const SCALE_MAP = [
 ];
 
 export default function EditInfo() {
-  const { setId, setName, setScale, setCoordinates } = useEditMarkerMutators();
+  const { setId, setName, setScale, setCoordinates, reset } =
+    useEditMarkerMutators();
   const [_, { reload }] = useMarker();
   const editMarker = useEditMarkerState();
 
@@ -67,7 +68,7 @@ export default function EditInfo() {
     }
 
     alert('送信しました。');
-    setId(null);
+    reset();
     reload();
   }
 
@@ -91,14 +92,14 @@ export default function EditInfo() {
     }
 
     alert('削除しました。');
-    setId(null);
+    reset();
   }
 
   function cancel(isNew = false) {
     const res = isNew
       ? confirm('追加を取り消します')
       : confirm('選択を解除します');
-    if (res) setId(null);
+    if (res) reset();
   }
 
   return (
@@ -110,6 +111,7 @@ export default function EditInfo() {
           <div className={styles.box}>
             <h3>城名</h3>
             <Input
+              placeholder="城名"
               type="text"
               value={editMarker.name}
               onChange={(e) => setName(e.currentTarget.value)}
@@ -142,6 +144,7 @@ export default function EditInfo() {
               <Input
                 type="number"
                 value={editMarker.coordinates.lat}
+                placeholder="緯度"
                 onChange={(e) => {
                   const lat = parseFloat(e.currentTarget.value);
                   const latlng = new LatLng(lat, editMarker.coordinates.lng);
@@ -154,6 +157,7 @@ export default function EditInfo() {
               <Input
                 type="number"
                 value={editMarker.coordinates.lng}
+                placeholder="経度"
                 onChange={(e) => {
                   const lng = parseFloat(e.currentTarget.value);
                   const latlng = new LatLng(editMarker.coordinates.lat, lng);
