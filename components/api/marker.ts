@@ -1,11 +1,21 @@
 import {
+  CastleMarker,
+  CastleMarkerScale,
+  CreateMarker,
+  EditMarker,
+} from '@/types/map';
+import {
   CastleMarkerRes,
   CastleMarkersRes,
   MarkerDataRes,
 } from '@/types/response';
 import { LatLngBounds } from 'leaflet';
-import { BASE_URL, commonGetFetch, commonPutFetch } from './base';
-import { EditMarker } from '@/types/map';
+import {
+  BASE_URL,
+  commonGetFetch,
+  commonPostFetch,
+  commonPutFetch,
+} from './base';
 
 /**
  * @description マーカーを取得する
@@ -43,6 +53,23 @@ export async function fetchCastleMarkerData(): Promise<
   return commonGetFetch<MarkerDataRes>(url.toString());
 }
 
+export async function fetchCreateCastleMarker(
+  marker: EditMarker
+): Promise<CastleMarkersRes | undefined> {
+  const url = new URL('markers', BASE_URL);
+  const markers: CreateMarker[] = [
+    {
+      name: marker.name,
+      coordinates: marker.coordinates,
+      scale: marker.scale,
+    },
+  ];
+  return commonPostFetch<CastleMarkersRes, { markers: CreateMarker[] }>(
+    url.toString(),
+    { markers }
+  );
+}
+
 /**
  * @description マーカーを更新する
  * @param marker マーカー
@@ -54,8 +81,6 @@ export async function fetchUpdateCastleMarker(
   const url = new URL('markers', BASE_URL);
   return commonPutFetch<CastleMarkerRes, { marker: EditMarker }>(
     url.toString(),
-    {
-      marker,
-    }
+    { marker }
   );
 }

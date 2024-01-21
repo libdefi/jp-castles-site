@@ -24,6 +24,8 @@ export type CastleMarkerScale = {
   scale: number;
 };
 
+export type CreateMarker = Omit<CastleMarkerScale, 'id'>;
+
 export type EditMarker = {
   id: string | null;
   name: string;

@@ -1,10 +1,14 @@
-import { fetchUpdateCastleMarker } from '@/components/api/marker';
+import {
+  fetchCreateCastleMarker,
+  fetchUpdateCastleMarker,
+} from '@/components/api/marker';
 import Button from '@/components/share/button/Button';
 import Input from '@/components/share/input/Input';
 import {
   useEditMarkerMutators,
   useEditMarkerState,
 } from '@/state/editMarkerState';
+import { CastleMarkerRes, CastleMarkersRes } from '@/types/response';
 import { LatLng } from 'leaflet';
 import styles from './index.module.scss';
 
@@ -47,8 +51,12 @@ export default function EditInfo() {
     const res = confirm('送信します。');
     if (!res) return;
 
-    const editMarkerRes = await fetchUpdateCastleMarker(editMarker);
-    if (editMarkerRes === undefined) {
+    let markerRes: CastleMarkerRes | CastleMarkersRes | undefined;
+    const isNew = editMarker.id?.startsWith('new');
+    if (isNew) markerRes = await fetchCreateCastleMarker(editMarker);
+    else markerRes = await fetchUpdateCastleMarker(editMarker);
+
+    if (markerRes === undefined) {
       alert('送信に失敗しました。');
       return;
     }

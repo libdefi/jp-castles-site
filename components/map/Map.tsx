@@ -64,7 +64,7 @@ type InnerMapContainerProps = {
 
 function InnerMapContainer({ setMarkers }: InnerMapContainerProps) {
   const [markers, { setZoom, setBounds }] = useMarker();
-  const { setCoordinates } = useEditMarkerMutators();
+  const { setId, setCoordinates } = useEditMarkerMutators();
   const mode = useMapModeState();
   const { setSettingsCenter, setSettingsZoom } = useMapSettingsMutator();
 
@@ -83,7 +83,11 @@ function InnerMapContainer({ setMarkers }: InnerMapContainerProps) {
       setBounds(e.target.getBounds());
     },
     dblclick: (e) => {
-      if (mode === 'edit') setCoordinates(e.latlng);
+      if (mode === 'edit') {
+        const t = new Date().getTime();
+        setId(`new_${t}_${e.latlng.lat}_${e.latlng.lng}}`);
+        setCoordinates(e.latlng);
+      }
     },
   });
 

@@ -19,6 +19,30 @@ export const commonGetFetch = async <T>(
 };
 
 /**
+ * @description POSTリクエストを送信する
+ * @param path リクエストパス
+ * @param body リクエストボディ
+ * @returns {Promise<T | undefined>} レスポンスデータ
+ */
+export const commonPostFetch = async <T, U>(
+  path: string,
+  body: U
+): Promise<T | undefined> => {
+  const url = new URL(path, BASE_URL).href;
+
+  return fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+    .then((res) => res.json())
+    .catch((err) => {
+      console.error(err);
+      return undefined;
+    });
+};
+
+/**
  * @description PUTリクエストを送信する
  * @param path リクエストパス
  * @param body リクエストボディ
