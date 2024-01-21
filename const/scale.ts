@@ -1,4 +1,4 @@
-import { MARKERS } from "./marker";
+import { MARKERS } from './marker';
 
 type ZoomToScaleMap = {
   [key: number]: number;

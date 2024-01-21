@@ -1,22 +1,20 @@
-"use client";
+'use client';
 
-import { MARKER_EDIT } from "@/const/marker";
-import { useEditMarkerMutators } from "@/state/editMarkerState";
-import { useMapModeState } from "@/state/mapModeState";
-import { CastleMarker } from "@/types/map";
-import { LeafletEventHandlerFnMap, icon } from "leaflet";
-import { Marker, Popup } from "react-leaflet";
-import styles from "./Markers.module.scss";
+import { MARKER_EDIT } from '@/const/marker';
+import { useEditMarkerMutators } from '@/state/editMarkerState';
+import { EditMarker as EditMarkerT } from '@/types/map';
+import { LeafletEventHandlerFnMap, icon } from 'leaflet';
+import { Marker, Popup } from 'react-leaflet';
+import styles from './Markers.module.scss';
 
 type Props = {
-  marker: CastleMarker;
+  marker: EditMarkerT;
 };
 
 export default function EditMarker(props: Props) {
   const { marker } = props;
 
   const { setCoordinates } = useEditMarkerMutators();
-  const mode = useMapModeState();
   const markerIcon = icon({
     iconUrl: MARKER_EDIT.img.src,
     iconSize: [40, 40],
@@ -25,10 +23,7 @@ export default function EditMarker(props: Props) {
   });
 
   const eventHandlers: LeafletEventHandlerFnMap = {
-    dragend: (e) => {
-      const res = confirm("城の位置情報を変更します。");
-      if (res) setCoordinates(e.target.getLatLng());
-    },
+    dragend: (e) => setCoordinates(e.target.getLatLng()),
   };
 
   return (

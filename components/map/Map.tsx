@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { ZOOM_MAX, ZOOM_MIN } from "@/const/scale";
-import useMarker from "@/hooks/useMarker";
+import { ZOOM_MAX, ZOOM_MIN } from '@/const/scale';
+import useMarker from '@/hooks/useMarker';
 import {
   useEditMarkerMutators,
   useEditMarkerState,
-} from "@/state/editMarkerState";
-import { useMapModeState } from "@/state/mapModeState";
+} from '@/state/editMarkerState';
+import { useMapModeState } from '@/state/mapModeState';
 import {
   useMapSettingsMutator,
   useMapSettingsState,
-} from "@/state/mapSettingsState";
-import { CastleMarker } from "@/types/map";
-import { LatLng, LatLngBounds, LatLngBoundsExpression } from "leaflet";
-import "leaflet/dist/leaflet.css";
-import { useEffect, useState } from "react";
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-import getId from "../util";
-import EditMarker from "./EditMarker";
-import styles from "./Map.module.scss";
-import Markers from "./Markers";
+} from '@/state/mapSettingsState';
+import { CastleMarker } from '@/types/map';
+import { LatLng, LatLngBounds, LatLngBoundsExpression } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
+import getId from '../util';
+import EditMarker from './EditMarker';
+import styles from './Map.module.scss';
+import Markers from './Markers';
 
 export default function CastleMap() {
   const [markers, setMarkers] = useState<CastleMarker[]>([]);
@@ -50,7 +50,7 @@ export default function CastleMap() {
       {markers.map((m) => (
         <Markers key={getId(m)} marker={m} isEdited={false} />
       ))}
-      <EditMarker marker={editMarker} />
+      {editMarker.id === null || <EditMarker marker={editMarker} />}
     </MapContainer>
   );
 }
@@ -80,7 +80,7 @@ function InnerMapContainer({ setMarkers }: InnerMapContainerProps) {
       setBounds(e.target.getBounds());
     },
     dblclick: (e) => {
-      if (mode === "edit") setCoordinates(e.latlng);
+      if (mode === 'edit') setCoordinates(e.latlng);
     },
   });
 

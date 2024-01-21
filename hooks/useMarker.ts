@@ -1,15 +1,15 @@
-import { fetchCastleMarkers } from "@/components/api/marker";
-import { DEFAULT_ZOOM, ZOOM_TO_SCALE_MAP, scaleToMarker } from "@/const/scale";
-import { CastleMarker } from "@/types/map";
-import { LatLngBounds } from "leaflet";
-import { useEffect, useState } from "react";
+import { fetchCastleMarkers } from '@/components/api/marker';
+import { DEFAULT_ZOOM, ZOOM_TO_SCALE_MAP, scaleToMarker } from '@/const/scale';
+import { CastleMarker } from '@/types/map';
+import { LatLngBounds } from 'leaflet';
+import { useEffect, useState } from 'react';
 
 type UseMarker = [
   CastleMarker[],
   {
     setZoom: (zoom: number) => void;
     setBounds: (bounds: LatLngBounds) => void;
-  },
+  }
 ];
 
 export default function useMarker(): UseMarker {
@@ -30,6 +30,7 @@ export default function useMarker(): UseMarker {
         name: m.name,
         coordinates: m.coordinates,
         img: scaleToMarker(m.scale).img,
+        scale: m.scale,
       }));
 
       setMarkers(markers);

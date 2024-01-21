@@ -1,21 +1,22 @@
-import getId from "@/components/util";
-import { MARKERS } from "@/const/marker";
-import { CastleMarker, Coordinates } from "@/types/map";
-import { StaticImageData } from "next/image";
-import { useEffect } from "react";
-import { atom, useRecoilState, useRecoilValue } from "recoil";
-import { recoilKeyHashSet } from "./keys";
+import { MARKERS } from '@/const/marker';
+import { scaleToMarker } from '@/const/scale';
+import { CastleMarker, Coordinates, EditMarker } from '@/types/map';
+import { StaticImageData } from 'next/image';
+import { useEffect } from 'react';
+import { atom, useRecoilState, useRecoilValue } from 'recoil';
+import { recoilKeyHashSet } from './keys';
 
-const editMarker = atom<CastleMarker>({
+const editMarker = atom<EditMarker>({
   key: recoilKeyHashSet.editMarker,
   default: {
-    id: "",
-    name: "",
+    id: null,
+    name: '',
     coordinates: {
       lat: 0,
       lng: 0,
     },
     img: MARKERS[0].img,
+    scale: 1,
   },
 });
 
@@ -32,13 +33,13 @@ export function useEditMarkerState() {
  * @returns 編集中のマーカーの状態を更新する関数
  */
 export function useEditMarkerMutators() {
-  const [_editMarkerState, setEditMarkerState] = useRecoilState(editMarker);
+  const [editMarkerState, setEditMarkerState] = useRecoilState(editMarker);
 
   /**
    * @description マーカーのIDを更新する
    * @param id 更新するID
    */
-  function setId(id: string) {
+  function setId(id: string | null) {
     setEditMarkerState((prev) => ({ ...prev, id }));
   }
 
@@ -47,7 +48,7 @@ export function useEditMarkerMutators() {
    * @param name 更新する名前
    */
   function setName(name: string) {
-    setEditMarkerState((prev) => ({ ...prev, name, id: getId(prev) }));
+    setEditMarkerState((prev) => ({ ...prev, name }));
   }
 
   /**
@@ -59,6 +60,14 @@ export function useEditMarkerMutators() {
       ...prev,
       coordinates,
     }));
+  }
+
+  /**
+   * @description マーカーのスケールを更新する
+   * @param img 更新するスケール
+   */
+  function setScale(scale: number) {
+    setEditMarkerState((prev) => ({ ...prev, scale }));
   }
 
   /**
@@ -74,8 +83,13 @@ export function useEditMarkerMutators() {
    * @param marker 更新するマーカー
    */
   function setMarker(marker: CastleMarker) {
-    setEditMarkerState(marker);
+    setEditMarkerState((v) => ({ ...v, ...marker }));
   }
 
-  return { setId, setName, setCoordinates, setImg, setMarker };
+  useEffect(() => {
+    const img = scaleToMarker(editMarkerState.scale).img;
+    setImg(img);
+  }, [editMarkerState.scale]);
+
+  return { setId, setName, setCoordinates, setScale, setMarker };
 }
