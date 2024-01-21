@@ -46,6 +46,8 @@ export default function EditInfo() {
   const [_, { reload }] = useMarker();
   const editMarker = useEditMarkerState();
 
+  const isNew = editMarker.id?.startsWith('new');
+
   function handlerScaleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setScale(Number(e.target.value));
   }
@@ -74,7 +76,7 @@ export default function EditInfo() {
       alert('id が指定されていません。');
       return;
     }
-    if (editMarker.id.startsWith('new')) {
+    if (isNew) {
       alert('新規作成されたマーカーは削除できません。');
       return;
     }
@@ -92,8 +94,10 @@ export default function EditInfo() {
     setId(null);
   }
 
-  function cancel() {
-    const res = confirm('選択を解除します');
+  function cancel(isNew = false) {
+    const res = isNew
+      ? confirm('追加を取り消します')
+      : confirm('選択を解除します');
     if (res) setId(null);
   }
 
@@ -161,10 +165,10 @@ export default function EditInfo() {
           </div>
 
           <div className={styles.button_box}>
-            <Button outline onClick={cancel}>
-              選択解除
+            <Button outline onClick={() => cancel(isNew)}>
+              {isNew ? '取り消し' : '選択解除'}
             </Button>
-            {editMarker.id.startsWith('new') || (
+            {isNew || (
               <Button danger onClick={remove}>
                 削除
               </Button>
