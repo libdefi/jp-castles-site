@@ -11,14 +11,12 @@ import {
   useEditMarkerMutators,
   useEditMarkerState,
 } from '@/state/editMarkerState';
+import { Coordinates } from '@/types/map';
 import { CastleMarkerRes, CastleMarkersRes } from '@/types/response';
-import { LatLng } from 'leaflet';
 import styles from './index.module.scss';
 
-
 export default function EditInfo() {
-  const { setId, setName, setScale, setCoordinates, reset } =
-    useEditMarkerMutators();
+  const { setName, setScale, setCoordinates, reset } = useEditMarkerMutators();
   const [_, { reload }] = useMarker();
   const editMarker = useEditMarkerState();
 
@@ -26,6 +24,10 @@ export default function EditInfo() {
 
   function handlerScaleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setScale(Number(e.target.value));
+  }
+
+  function toLatLng(lat: number, lng: number): Coordinates {
+    return { lat, lng };
   }
 
   async function submit() {
@@ -122,8 +124,8 @@ export default function EditInfo() {
                 placeholder="緯度"
                 onChange={(e) => {
                   const lat = parseFloat(e.currentTarget.value);
-                  const latlng = new LatLng(lat, editMarker.coordinates.lng);
-                  setCoordinates(latlng);
+                  const latlng = toLatLng(lat, editMarker.coordinates.lng);
+                  if (latlng) setCoordinates(latlng);
                 }}
               />
             </p>
@@ -135,8 +137,8 @@ export default function EditInfo() {
                 placeholder="経度"
                 onChange={(e) => {
                   const lng = parseFloat(e.currentTarget.value);
-                  const latlng = new LatLng(editMarker.coordinates.lat, lng);
-                  setCoordinates(latlng);
+                  const latlng = toLatLng(editMarker.coordinates.lat, lng);
+                  if (latlng) setCoordinates(latlng);
                 }}
               />
             </p>
