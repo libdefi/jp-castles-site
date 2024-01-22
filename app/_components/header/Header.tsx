@@ -28,7 +28,7 @@ export default function Header() {
 
 function View() {
   return (
-    <a href="/" className={styles.anchor}>
+    <a href="/map" className={styles.anchor}>
       <span>探す</span>
       <Mapview className={styles.search_icon} />
     </a>
