@@ -1,14 +1,17 @@
 "use client";
 
-import { Noto_Serif_JP } from "next/font/google";
-import styles from "./Header.module.scss";
 import { EditLocation, Mapview } from "@/components/icons/Icons";
 import { useMapModeState } from "@/state/mapModeState";
+import { Noto_Serif_JP } from "next/font/google";
+import styles from "./Header.module.scss";
+import { usePathname } from "next/navigation";
 
 const noto_serif = Noto_Serif_JP({ subsets: ["latin"], weight: "700" });
 
 export default function Header() {
   const mode = useMapModeState();
+  const path = usePathname();
+  const showView = path === "/" || mode === "edit";
 
   return (
     <header className={styles.header}>
@@ -18,7 +21,7 @@ export default function Header() {
         </a>
       </h1>
 
-      {mode === "edit" ? <View /> : <Edit />}
+      {showView ? <View /> : <Edit />}
     </header>
   );
 }
