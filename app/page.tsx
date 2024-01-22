@@ -1,4 +1,5 @@
 import About from './_components/sections/about';
+import AboutIcons from './_components/sections/aboutIcons';
 import HowEdit from './_components/sections/howEdit';
 import Data from './_components/sections/markerData';
 import MiniMap from './_components/sections/miniMap';
@@ -10,6 +11,7 @@ export default function Page() {
       <About />
       <MiniMap />
       <Data />
+      <AboutIcons />
       <HowEdit />
     </main>
   );

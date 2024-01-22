@@ -1,5 +1,6 @@
 .data_card {
   grid-column: span 6;
+  grid-row: span 1;
 
   @media (max-width: 700px) {
     grid-column: span 12;

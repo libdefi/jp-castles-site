@@ -46,3 +46,33 @@ export function scaleToMarker(scale: number) {
   const i = scale - 1 < len ? scale - 1 : len - 1;
   return MARKERS[i];
 }
+
+/**
+ * スケールとラベル
+ */
+export const SCALE_MAP = [
+  {
+    scale: 6,
+    label: '百名城',
+  },
+  {
+    scale: 5,
+    label: '続百名城',
+  },
+  {
+    scale: 4,
+    label: '特別・国指定史跡',
+  },
+  {
+    scale: 3,
+    label: '市町村指定史跡',
+  },
+  {
+    scale: 2,
+    label: '遺構あり',
+  },
+  {
+    scale: 1,
+    label: 'その他',
+  },
+];

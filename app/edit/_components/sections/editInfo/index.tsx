@@ -5,6 +5,8 @@ import {
 } from '@/components/api/marker';
 import Button from '@/components/share/button/Button';
 import Input from '@/components/share/input/Input';
+import { SCALE_MAP } from '@/const/scale';
+import useMarker from '@/hooks/useMarker';
 import {
   useEditMarkerMutators,
   useEditMarkerState,
@@ -12,34 +14,7 @@ import {
 import { CastleMarkerRes, CastleMarkersRes } from '@/types/response';
 import { LatLng } from 'leaflet';
 import styles from './index.module.scss';
-import useMarker from '@/hooks/useMarker';
 
-const SCALE_MAP = [
-  {
-    scale: 6,
-    label: '百名城',
-  },
-  {
-    scale: 5,
-    label: '続百名城',
-  },
-  {
-    scale: 4,
-    label: '特別史跡・国指定史跡',
-  },
-  {
-    scale: 3,
-    label: '村指定史跡',
-  },
-  {
-    scale: 2,
-    label: '遺構あり',
-  },
-  {
-    scale: 1,
-    label: 'その他',
-  },
-];
 
 export default function EditInfo() {
   const { setId, setName, setScale, setCoordinates, reset } =
