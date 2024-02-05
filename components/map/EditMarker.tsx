@@ -34,14 +34,7 @@ export default function EditMarker(props: Props) {
       draggable
     >
       <Popup className={styles.popup}>
-        <a
-          className={styles.link}
-          href={`/castle/${marker.id}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {marker.name}
-        </a>
+        <p className={styles.link}>{marker.name}</p>
       </Popup>
     </Marker>
   );

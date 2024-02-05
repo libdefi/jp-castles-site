@@ -17,21 +17,12 @@ export type CastleMarker = {
   scale: number;
 };
 
-export type CastleMarkerScale = {
-  id: string;
-  name: string;
-  coordinates: Coordinates;
-  scale: number;
-};
+export type CastleMarkerScale = Omit<CastleMarker, 'img'>;
 
 export type CreateMarker = Omit<CastleMarkerScale, 'id'>;
 
-export type EditMarker = {
+export type EditMarker = Omit<CastleMarker, 'id'> & {
   id: string | null;
-  name: string;
-  coordinates: Coordinates;
-  img: StaticImageData;
-  scale: number;
 };
 
 export type CoordinatesRange = {

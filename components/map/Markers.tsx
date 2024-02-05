@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import { MARKER_SELECT } from "@/const/marker";
+import { MARKER_SELECT } from '@/const/marker';
 import {
   useEditMarkerMutators,
   useEditMarkerState,
-} from "@/state/editMarkerState";
-import { useMapModeState } from "@/state/mapModeState";
-import { useSelectMarkerIdState } from "@/state/selectMarkerIdState";
-import { CastleMarker } from "@/types/map";
-import { icon } from "leaflet";
-import { Marker, Popup } from "react-leaflet";
-import { Edit } from "../icons/Icons";
-import styles from "./Markers.module.scss";
+} from '@/state/editMarkerState';
+import { useMapModeState } from '@/state/mapModeState';
+import { useSelectMarkerIdState } from '@/state/selectMarkerIdState';
+import { CastleMarker } from '@/types/map';
+import { icon } from 'leaflet';
+import { Marker, Popup } from 'react-leaflet';
+import { Edit } from '../icons/Icons';
+import styles from './Markers.module.scss';
 
 type Props = {
   marker: CastleMarker;
@@ -35,7 +35,7 @@ export default function Markers(props: Props) {
   });
 
   function selectEditMarker() {
-    if (mode === "edit") setMarker(marker);
+    if (mode === 'edit') setMarker(marker);
   }
 
   return (
@@ -45,15 +45,8 @@ export default function Markers(props: Props) {
       ) : (
         <Marker position={marker.coordinates} icon={markerIcon}>
           <Popup className={styles.popup}>
-            <a
-              className={styles.link}
-              href={`/castle/${marker.id}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {marker.name}
-            </a>
-            {mode === "edit" && (
+            <p className={styles.link}>{marker.name}</p>
+            {mode === 'edit' && (
               <Edit className={styles.edit} onClick={selectEditMarker} />
             )}
           </Popup>
