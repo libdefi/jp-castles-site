@@ -15,8 +15,23 @@
 }
 
 .map_container {
+  position: relative;
   height: 100%;
   width: 100%;
+
+  :global {
+    .leaflet-tile-pane {
+      filter: grayscale(100%);
+      opacity: 0.5;
+    }
+
+    .leaflet-marker-pane,
+    .leaflet-popup-pane,
+    .leaflet-overlay-pane {
+      filter: none;
+      opacity: 1;
+    }
+  }
 }
 
 .move_down {
