@@ -44,16 +44,17 @@ export default function CastleMap() {
       zoomControl={false}
       className={styles.map_container}
     >
-      <MoveDown />
-      <InnerMapContainer setMarkers={setMarkers} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      <div className={styles.map_overlay} />
+      <InnerMapContainer setMarkers={setMarkers} />
       {markers.map((m) => (
         <Markers key={getId(m)} marker={m} isEdited={false} />
       ))}
       {editMarker.id === null || <EditMarker marker={editMarker} />}
+      <MoveDown />
     </MapContainer>
   );
 }
